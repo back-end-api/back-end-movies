@@ -1,20 +1,29 @@
-const { hashed } = require("../../helpers");
-const { Movie } = require("../../models");
+const {
+  Movie
+} = require("../../models");
 
 module.exports = {
   addMovies: async (req, res) => {
     try {
-      const result = await Movie.create({ ...req.body });
+      const result = await Movie.create({
+        ...req.body
+      });
 
-      res.send({ message: "Add Movie successfull", data: result });
+      res.redirect('/movies/home')
     } catch (error) {
       console.log(error);
     }
   },
+  showForm: (req, res) => {
+    res.render('formMovie.ejs')
+  },
   getMovies: async (req, res) => {
     try {
       const results = await Movie.find().populate("UserID");
-      res.render("showdata.ejs", { results });
+      res.render("showdata.ejs", {
+        results
+      });
+      console.log(results);
     } catch (error) {
       console.log(error);
     }
@@ -22,23 +31,34 @@ module.exports = {
 
   getByUserID: async (req, res) => {
     try {
-      const { UserID } = req.params;
+      const {
+        UserID
+      } = req.params;
 
-      const result = await Movie.find({ UserID }).populate("UserID");
+      const result = await Movie.find({
+        UserID
+      }).populate("UserID");
       console.log(result);
-      res.send({ message: "All Movie by User ID", data: result });
+      res.send({
+        message: "All Movie by User ID",
+        data: result
+      });
     } catch (error) {
       console.log(error);
     }
   },
 
   updateMovies: async (req, res) => {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
 
     console.log(id);
     try {
       const results = await Movie.findByIdAndUpdate(id, {
-        $set: { ...req.body },
+        $set: {
+          ...req.body
+        },
       });
 
       res.send({
@@ -51,10 +71,14 @@ module.exports = {
   },
 
   deleteMovies: async (req, res) => {
-    const { id } = req.params;
+    const {
+      id
+    } = req.params;
 
     try {
-      const results = await Movie.deleteOne({ _id: id });
+      const results = await Movie.deleteOne({
+        _id: id
+      });
       res.send({
         message: `Delete data succcess`,
         results: results,
