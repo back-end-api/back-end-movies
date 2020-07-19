@@ -5,10 +5,16 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const expressLayout = require("express-ejs-layouts");
 
-const { PORT, db, SESSION_SECRET } = require("./config");
+const {
+  PORT,
+  db,
+  SESSION_SECRET
+} = require("./config");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 
 require("./config").localPassport();
 
@@ -36,7 +42,7 @@ app.use(expressLayout);
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.send({ message: "Welcome to my API with passport" });
+  res.render("login.ejs");
 });
 app.use("/users", require("./routes/users"));
 app.use("/movies", require("./routes/movies"));
