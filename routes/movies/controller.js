@@ -6,10 +6,13 @@ module.exports = {
     try {
       const result = await Movie.create({ ...req.body });
 
-      res.send({ message: "Add Movie successfull", data: result });
+      res.redirect('/movies/home')
     } catch (error) {
       console.log(error);
     }
+  },
+  showForm: (req,res) =>{
+    res.render('formMovie.ejs')
   },
   getMovies: async (req, res) => {
     try {
