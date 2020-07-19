@@ -15,7 +15,6 @@ module.exports = {
     try {
       const results = await Movie.find().populate("UserID");
       res.render("showdata.ejs", { results });
-      console.log(results);
     } catch (error) {
       console.log(error);
     }
