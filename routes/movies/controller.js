@@ -2,11 +2,19 @@ const { hashed } = require("../../helpers");
 const { Movie } = require("../../models");
 
 module.exports = {
+  showForm: (req, res) => {
+    res.render("formMovie", {
+      user: req.user,
+    });
+  },
+  editForm: (req, res) => {
+    res.render("editMovie");
+  },
   addMovies: async (req, res) => {
     try {
       const result = await Movie.create({ ...req.body });
 
-      res.send({ message: "Add Movie successfull", data: result });
+      res.redirect("/movies");
     } catch (error) {
       console.log(error);
     }
@@ -14,6 +22,8 @@ module.exports = {
   getMovies: async (req, res) => {
     try {
       const results = await Movie.find().populate("UserID");
+      // const mixing = JSON.stringify(results);
+
       res.render("showdata.ejs", { results });
     } catch (error) {
       console.log(error);
