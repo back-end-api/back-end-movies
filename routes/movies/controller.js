@@ -3,6 +3,14 @@ const {
 } = require("../../models");
 
 module.exports = {
+  showForm: (req, res) => {
+    res.render("formMovie", {
+      user: req.user,
+    });
+  },
+  editForm: (req, res) => {
+    res.render("editMovie");
+  },
   addMovies: async (req, res) => {
     try {
       const result = await Movie.create({
@@ -13,9 +21,6 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
-  },
-  showForm: (req, res) => {
-    res.render('formMovie.ejs')
   },
   getMovies: async (req, res) => {
     try {
